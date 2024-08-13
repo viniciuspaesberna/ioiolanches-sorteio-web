@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { Suspense } from 'react'
 import { FaFacebook, FaInstagram, FaWhatsapp } from 'react-icons/fa6'
 
 import bg from '@/assets/presents.svg'
@@ -12,7 +13,9 @@ const SuccessPage = () => {
 
       <Image src={bg} alt="" className="max-w-[360px]" />
 
-      <SuccessPageTitle />
+      <Suspense fallback={null}>
+        <SuccessPageTitle />
+      </Suspense>
 
       <p className="text-md text-zinc-400">
         Seu cupom foi resgatado com sucesso
