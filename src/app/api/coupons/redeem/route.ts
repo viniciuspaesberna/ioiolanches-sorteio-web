@@ -74,9 +74,6 @@ export async function PUT(request: NextRequest) {
             },
       },
     })
-    .then(() => {
-      return NextResponse.json({ message: 'Coupon redeemed' }, { status: 201 })
-    })
     .catch((error) => {
       console.log('[Coupon redeem]:' + error)
 
@@ -85,4 +82,6 @@ export async function PUT(request: NextRequest) {
         { status: 500 },
       )
     })
+
+  return NextResponse.json({ message: 'Coupon redeemed' }, { status: 201 })
 }
