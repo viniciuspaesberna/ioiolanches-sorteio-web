@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 
 const SuccessPage = () => {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center">
+    <main className="my-auto flex flex-col items-center justify-center">
       <h1 className="text-3xl font-bold">Boa sorte!</h1>
 
       <Image src={bg} alt="" className="max-w-[360px]" />

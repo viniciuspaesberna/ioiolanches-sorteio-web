@@ -76,6 +76,10 @@ export const RedeemCodeForm = () => {
     const isDeleting = inputEvent.inputType === 'deleteContentBackward'
     const rawValue = e.target.value.replace(/\D/g, '') // Only numbers
 
+    if (rawValue.length === 11) {
+      form.clearErrors('phone')
+    }
+
     if (isDeleting && cursorPosition && cursorPosition <= 4) {
       // Deleting within the area that includes parentheses
       setRawPhoneValue(rawValue.slice(0, -1))
@@ -92,25 +96,32 @@ export const RedeemCodeForm = () => {
     setIsLoading(true)
 
     await api
-      .put('/coupons/redeem', {
+      .put('/api/coupons/redeem', {
         code,
         clientName: name,
         clientPhone: phone.length === 12 ? phone.slice(0, -1) : phone,
       })
-      .then(() => {
-        router.push(`/success?nome=${name}`)
-        // toast({
-        //   title: 'Cupom resgatado com sucesso!',
-        //   description: 'Boa sorte!',
-        // })
+      .then((response) => {
+        console.log(response)
+        if (response.status === 200) {
+          router.push(`/sucesso?nome=${name}`)
+        }
       })
       .catch((err) => {
-        console.log(err.response.data)
+        form.setValue('code', '')
+
         if (err.response.data.message === 'Coupon not found') {
           toast({
             variant: 'destructive',
             title: 'Erro ao resgatar',
-            description: 'Código inválido ou cupom já foi utilizado.',
+            description: 'Código inválido',
+          })
+        }
+        if (err.response.data.message === 'Coupon already redeemed') {
+          toast({
+            variant: 'warn',
+            title: 'Erro ao resgatar',
+            description: 'Cupom já resgatado.',
           })
         }
       })
@@ -130,12 +141,13 @@ export const RedeemCodeForm = () => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <div className="flex w-full justify-between">
+              <div className="flex w-full items-baseline justify-between">
                 <FormLabel className="text-zinc-50">
                   Seu nome completo
                 </FormLabel>
-                <FormMessage className="text-xs text-rose-500" />
+                <FormMessage className="text-xs leading-3 text-rose-500" />
               </div>
+
               <FormControl>
                 <Input placeholder="Digite seu nome" {...field} />
               </FormControl>
@@ -148,11 +160,11 @@ export const RedeemCodeForm = () => {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <div className="flex w-full justify-between">
+              <div className="flex w-full items-baseline justify-between">
                 <FormLabel className="text-zinc-50">
                   Seu número de celular
                 </FormLabel>
-                <FormMessage className="text-xs text-rose-500" />
+                <FormMessage className="text-xs leading-3 text-rose-500" />
               </div>
               <FormControl>
                 <Input
@@ -173,12 +185,12 @@ export const RedeemCodeForm = () => {
           control={form.control}
           name="code"
           render={({ field }) => (
-            <div className="">
-              <div className="flex w-full justify-between">
+            <div>
+              <div className="flex w-full items-baseline justify-between">
                 <FormLabel className="text-zinc-50">
                   Código do seu cupom
                 </FormLabel>
-                <FormMessage className="text-xs text-rose-500" />
+                <FormMessage className="text-xs leading-3 text-rose-500" />
               </div>
 
               <FormItem className="flex justify-between gap-2">
@@ -202,7 +214,7 @@ export const RedeemCodeForm = () => {
                   </InputOTP>
                 </FormControl>
 
-                <Button disabled={isLoading} className="w-full" type="submit">
+                <Button disabled={isLoading} className="w-[90px]" type="submit">
                   {isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
