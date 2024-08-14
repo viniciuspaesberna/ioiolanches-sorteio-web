@@ -101,11 +101,8 @@ export const RedeemCodeForm = () => {
         clientName: name,
         clientPhone: phone.length === 12 ? phone.slice(0, -1) : phone,
       })
-      .then((response) => {
-        console.log(response)
-        if (response.status === 200) {
-          router.push(`/sucesso?nome=${name}`)
-        }
+      .then(() => {
+        router.push(`/sucesso?nome=${name}`)
       })
       .catch((err) => {
         console.log(err)
