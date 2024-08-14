@@ -108,6 +108,7 @@ export const RedeemCodeForm = () => {
         }
       })
       .catch((err) => {
+        console.log(err)
         form.setValue('code', '')
 
         if (err.response.data.message === 'Coupon not found') {
