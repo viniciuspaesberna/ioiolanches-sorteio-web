@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  crossOrigin: 'anonymous',
+  headers: {
+    accessControlAllowOrigin: '*',
+  },
 }
 
 export default nextConfig
