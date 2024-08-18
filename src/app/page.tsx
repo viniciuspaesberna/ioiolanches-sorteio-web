@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import { RedeemCodeForm } from '@/components/redeem-code-form'
 
 export default function Home() {
@@ -11,7 +13,9 @@ export default function Home() {
         </p>
       </div>
 
-      <RedeemCodeForm />
+      <Suspense fallback={null}>
+        <RedeemCodeForm />
+      </Suspense>
     </main>
   )
 }
