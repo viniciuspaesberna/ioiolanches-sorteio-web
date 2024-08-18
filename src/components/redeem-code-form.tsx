@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { REGEXP_ONLY_CHARS } from 'input-otp'
 import { Loader2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -43,10 +43,15 @@ const redeemCodeFormSchema = z.object({
 type RedeemCodeFormData = z.infer<typeof redeemCodeFormSchema>
 
 export const RedeemCodeForm = () => {
+  const searchParams = useSearchParams()
+
+  const code = searchParams.get('code')
+
   const form = useForm<RedeemCodeFormData>({
     resolver: zodResolver(redeemCodeFormSchema),
     defaultValues: {
       phone: '',
+      code: code ?? '',
     },
   })
 
