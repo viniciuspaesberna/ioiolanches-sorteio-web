@@ -10,6 +10,8 @@ export async function GET(request: NextRequest) {
 
   const authorization = headers.get('authorization')
 
+  console.log(apiSecret)
+
   if (authorization?.split(' ')[1] !== apiSecret) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
@@ -30,6 +32,8 @@ export async function POST(request: NextRequest) {
   const headers = request.headers
 
   const authorization = headers.get('authorization')
+
+  console.log(authorization)
 
   if (authorization?.split(' ')[1] !== apiSecret) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

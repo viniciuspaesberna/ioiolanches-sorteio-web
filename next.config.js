@@ -10,7 +10,11 @@ const nextConfig = {
           // Allow for specific domains to have access or * for all
           {
             key: 'Access-Control-Allow-Origin',
-            value: '*',
+            value: 'http://localhost:1212',
+          },
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'true',
           },
           // Allows for specific headers accepted (These are a few standard ones)
           {
