@@ -3,20 +3,16 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Routes this applies to
         source: '/api/(.*)',
-        // Headers
         headers: [
-          // Allow for specific domains to have access or * for all
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'http://localhost:1212',
+            value: '*',
           },
           {
             key: 'Access-Control-Allow-Credentials',
             value: 'true',
           },
-          // Allows for specific headers accepted (These are a few standard ones)
           {
             key: 'Access-Control-Allow-Headers',
             value: 'Content-Type, Authorization',
